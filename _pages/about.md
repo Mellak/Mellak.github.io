@@ -2,11 +2,11 @@
 layout: about
 title: About
 permalink: /
-subtitle: Ph.D. candidate in medical imaging and inverse problems
+subtitle: Postdoctoral researcher in medical imaging and inverse problems
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: pdp.jpeg
   image_circular: false
 
 selected_papers: true
@@ -17,10 +17,12 @@ latest_posts:
   enabled: false
 ---
 
-Hi, I’m **Youness Mellak**, a Ph.D. candidate working on **PET image reconstruction**, **positron range correction**, and **physics-informed deep learning for inverse problems**.
+Hi, I’m **Youness Mellak**, a **postdoctoral researcher** working in **medical imaging**, with a focus on **PET image reconstruction**, **positron range correction**, and **physics-informed deep learning for inverse problems**.
 
-My research focuses on combining **medical physics** and **machine learning** to improve PET image quality, especially for challenging scenarios such as high-energy isotopes and heterogeneous tissues. I work on topics including three-gamma PET imaging, matched projector/backprojector modeling, and direct reconstruction methods using deep neural networks.
+My research centers on integrating **learning-based models** with **physical forward operators** to improve image quality and quantitative accuracy in PET. I work on problems such as **positron range (PR) modeling and correction**, **three-gamma PET imaging**, and **direct reconstruction approaches**, with particular emphasis on **matched projector–backprojector formulations** within iterative reconstruction algorithms.
 
-I have strong experience with **Monte Carlo simulations (GATE)**, **deep learning (PyTorch)**, and **advanced reconstruction algorithms**, and I’m particularly interested in integrating learned operators into iterative reconstruction frameworks.
+Methodologically, my work spans **Monte Carlo radiation transport simulations (GATE)**, **deep learning architectures** (CNNs, GNNs, transformers, GANs, diffusion models), and **optimization-based reconstruction techniques**. I am especially interested in learning spatially varying operators, embedding learned components into classical reconstruction pipelines, and designing models that respect underlying physical constraints.
 
-You can find my publications below, along with links to my code and project pages.
+I completed my Ph.D. at the **Laboratory of Medical Information Processing (LaTIM, UMR 1101)** in Brest, France, under the supervision of **Prof. Dimitris Visvikis**. I hold a Master’s degree in **Imaging and Technology for Medicine** and a Biomedical Engineering degree, with a strong background in signal processing, inverse problems, and computational physics.
+
+On this website, you can find my **publications**, **research projects**, and links to **code and project pages**. I am always happy to discuss research, collaborations, or technical questions—email is the best way to reach me.
