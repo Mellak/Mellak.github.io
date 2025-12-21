@@ -4,7 +4,7 @@
 
 title: "" # the website title (if blank, full name will be used instead)
 first_name: Youness
-middle_name: "" 
+middle_name: ""
 last_name: MELLAK
 contact_note: >
   Email and LinkedIn are the best way to reach me.
@@ -123,7 +123,6 @@ disqus_shortname:
 # If you have blog posts published on medium.com or other external sources,
 # you can display them in your blog by adding a link to the RSS feed.
 external_sources: []
-
 
 # -----------------------------------------------------------------------------
 # Newsletter
