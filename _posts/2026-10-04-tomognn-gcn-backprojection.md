@@ -57,6 +57,6 @@ The GCN layer is therefore a cruder cousin of one MLEM step from a flat image.
 
 The good results of TomoGNN come from the two CNNs around this layer: a sinogram denoiser and an image-domain refiner on top of a normalized backprojection.
 That is a sensible pipeline, close to "denoise, backproject, post-process", but the graph layer itself adds no learned reconstruction.
-A learned operator would need richer node features or edge weights that are predicted rather than copied from the system matrix, which is the direction I later took for positron-range modeling (see [One Linear Layer]({{ '/projects/' | relative_url }}#one-linear-layer)).
+A learned operator would need richer node features or edge weights that are predicted rather than copied from the system matrix, which is the direction I later took for positron-range modeling (see [One Linear Layer]({{ '/publications/' | relative_url }}#one-linear-layer)).
 
 The [repository](https://github.com/Mellak/TomoGNN) is archived and kept for reference.

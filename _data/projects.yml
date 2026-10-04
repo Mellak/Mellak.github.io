@@ -1,21 +1,18 @@
-# Projects shown on /projects/ (cards + popups) and in the home page "Selected projects" strip.
+# Popups (abstract, figures, BibTeX) attached to publications in _bibliography/papers.bib.
+# Each popup is rendered next to its publication by _layouts/bib.liquid and opened by the
+# animated icon, the "Project" button, or a link such as /publications/#ddconv.
 #
-# id:           URL hash (/projects/#id) and popup id
-# icon:         animated card icon in _includes/project_icons/<icon>.svg
-# bib:          key in _bibliography/papers.bib (used for the BibTeX block and to add a
-#               "Project" button to the publication entry)
+# id:            URL hash and popup id
+# bib:           key of the publication in papers.bib (its links, icon and BibTeX are used)
+# venue, year:   badge at the top of the popup
 # authors[].aff: indexes into affiliations (1-based)
-# links:        doi, arxiv, pdf (file in assets/pdf/ or URL), code
-# figures:      kind (method | results), src (in assets/img/projects/), width, height, alt,
-#               caption, narrow (true for tall figures)
+# figures:       kind (method | results), src (in assets/img/projects/), width, height, alt,
+#                caption, narrow (true for tall figures)
 
 - id: continuous-3d-ldm
-  icon: continuous-3d-ldm
   title: Continuous 3-D Latent Diffusion for Medical Generation and Reconstruction
-  short_title: Continuous 3-D Latent Diffusion
   venue: Under review
   year: 2026
-  tldr: One continuous 3-D latent prior that generates full CT/MRI volumes and reconstructs sparse-view CT and accelerated MRI on a single GPU.
   affiliations:
     - LaTIM, INSERM UMR 1101, Université de Bretagne Occidentale, Brest, France
   authors:
@@ -53,18 +50,12 @@
       height: 1197
       alt: "Sparse-view CT reconstructions from 30 noisy projections with FBP, DDS, the proposed method and the ground truth, with zoomed regions and error maps"
       caption: "Sparse-view CT reconstruction from 30 noisy projections. For each method (FBP, DDS, ours, ground truth), the top panel shows the reconstruction and the region of interest; the bottom panels show its magnification and the absolute error map in HU."
-  links:
-    pdf: continuous_3d_latent_diffusion.pdf
-    code: https://github.com/Mellak/continuous-3d-latent-diffusion
   bib: mellak2026continuous3d
 
 - id: latent-implicit
-  icon: latent-implicit
   title: 3D Latent Implicit Diffusion for Scalable Volume Generation
-  short_title: 3D Latent Implicit Diffusion
   venue: IEEE NSS/MIC
   year: 2026
-  tldr: A lightweight 3-D autoencoder with an implicit LIIF decoder lets a latent DDPM generate 512³ volumes on one 48 GB GPU.
   affiliations:
     - LaTIM, INSERM UMR 1101, Université de Bretagne Occidentale, Brest, France
   authors:
@@ -90,17 +81,12 @@
       narrow: true
       alt: "Axial, coronal and sagittal slices of dataset and generated CT and MRI volumes"
       caption: "Central axial, coronal and sagittal slices of dataset and generated volumes for CT and MRI."
-  links:
-    pdf: 3d_latent_implicit_diffusion_2026.pdf
   bib: mellak2026latentimplicit
 
 - id: frozen-sd-vae
-  icon: frozen-sd-vae
   title: Frozen Stable Diffusion VAE as a Slice-Wise Encoder for Scalable 3-D Medical Image Generation
-  short_title: Frozen SD-VAE Slice-Wise Encoder
   venue: IEEE NSS/MIC
   year: 2026
-  tldr: Reuse a frozen 2-D Stable Diffusion VAE slice by slice, then train a full-volume flow model on the stacked latents of CT, PET and MRI.
   affiliations:
     - LaTIM, INSERM UMR 1101, Université de Bretagne Occidentale, Brest, France
   authors:
@@ -125,25 +111,22 @@
       narrow: true
       alt: "Axial, coronal and sagittal slices of dataset and generated CT, PET and MRI volumes"
       caption: "Central axial, coronal and sagittal slices of dataset and generated volumes for CT, PET and MRI."
-  links:
-    pdf: frozen_stable_diffusion_vae_2026.pdf
   bib: mellak2026frozenvae
 
 - id: ddconv
-  icon: ddconv
   title: Dual-Input Dynamic Convolution for Positron Range Correction in PET Image Reconstruction
-  short_title: DDConv
   venue: IEEE TRPMS
   year: 2025
-  tldr: A CNN predicts a positron-range kernel for every voxel from the local attenuation map, giving a blurring operator with an exact transpose for iterative PET reconstruction.
   affiliations:
     - LaTIM, INSERM UMR 1101, Université de Bretagne Occidentale, Brest, France
+    - Brainlab, Munich, Germany
+    - Kuopio University Hospital, Kuopio, Finland
   authors:
     - { name: Youness Mellak, aff: [1], self: true }
     - { name: Alexandre Bousse, aff: [1] }
     - { name: Thibaut Merlin, aff: [1] }
-    - { name: Élise Émond }
-    - { name: Mikko Hakulinen }
+    - { name: Élise Émond, aff: [2] }
+    - { name: Mikko Hakulinen, aff: [3] }
     - { name: Dimitris Visvikis, aff: [1] }
   abstract: >-
     Positron range (PR) blurs PET images, and the effect grows with higher-energy emitters such as ⁶⁸Ga and
@@ -171,26 +154,20 @@
       height: 230
       alt: "XCAT activity phantom with four lesions and its positron-range blurring by Monte Carlo, SVTD and DDConv"
       caption: "Positron-range blurring of an XCAT ⁶⁸Ga activity phantom with four lesions: two in the lung, one at the lung/soft-tissue interface (3) and one at the lung/liver interface (4). SVTD fails to blur lesions 3 and 4 correctly, while DDConv stays close to the Monte Carlo reference."
-  links:
-    doi: 10.1109/TRPMS.2025.3647264
-    arxiv: 2503.00587
-    code: https://github.com/Mellak/ddconv-prc
   bib: mellak2025ddconv
 
 - id: positron-gan
-  icon: positron-gan
   title: Fast-Track of F-18 Positron Paths Simulations Using Generative Adversarial Networks
-  short_title: Positron-Path GAN
   venue: IEEE ISBI
   year: 2024
-  tldr: A transformer GAN generates complete positron tracks, positions and remaining energy at every interaction, as a fast surrogate for Monte Carlo transport.
   affiliations:
     - LaTIM, INSERM UMR 1101, Université de Bretagne Occidentale, Brest, France
+    - Nuclear Medicine Department, CHU Poitiers, Poitiers, France
   authors:
     - { name: Youness Mellak, aff: [1], self: true }
     - { name: Konstantinos Chatzipapas, aff: [1] }
     - { name: Alexandre Bousse, aff: [1] }
-    - { name: Catherine Cheze-Le Rest }
+    - { name: Catherine Cheze-Le Rest, aff: [1, 2] }
     - { name: Dimitris Visvikis, aff: [1] }
     - { name: Julien Bert, aff: [1] }
   abstract: >-
@@ -218,26 +195,19 @@
       height: 521
       alt: "Histograms of positron end points in lung along x, y and z for GATE and the GAN, which overlap closely"
       caption: "F-18 point-spread function in lung along the x, y and z axes: end points of positron paths simulated with GATE (green, real) and generated by the GAN (red, fake)."
-  links:
-    doi: 10.1109/ISBI56570.2024.10635834
-    arxiv: 2403.06307
-    code: https://github.com/Mellak/Particles_Tracking_GAN
   bib: mellak2024fasttrack
 
 - id: direct3gamma
-  icon: direct3gamma
   title: "Direct3γ: A Pipeline for Direct Three-Gamma PET Image Reconstruction"
-  short_title: Direct3γ
   venue: IEEE TRPMS
   year: 2025
-  tldr: An event-by-event pipeline that turns three-gamma PET detections into 3-D images, from photon sequencing to learned refinement.
   affiliations:
     - LaTIM, INSERM UMR 1101, Université de Bretagne Occidentale, Brest, France
   authors:
     - { name: Youness Mellak, aff: [1], self: true }
     - { name: Alexandre Bousse, aff: [1] }
     - { name: Thibaut Merlin, aff: [1] }
-    - { name: Debora Giovagnoli }
+    - { name: Debora Giovagnoli, aff: [1] }
     - { name: Dimitris Visvikis, aff: [1] }
   abstract: >-
     Three-gamma (3γ) PET aims to improve spatial resolution and reduce noise in nuclear medicine. The
@@ -263,19 +233,12 @@
       height: 782
       alt: "Sagittal, coronal and transverse views of an XCAT phantom: ground truth, TOF, DIP-TOF and Direct3γ reconstructions"
       caption: "Human-sized scanner, XCAT phantom: ground truth, 200-ps TOF PET, DIP-TOF and Direct3γ in sagittal, coronal and transverse views. The coronal ground truth shows the lesion ROIs (red) and background ROIs (green)."
-  links:
-    doi: 10.1109/TRPMS.2025.3577810
-    arxiv: 2407.18337
-    code: https://github.com/Mellak/Direct-Three-Gamma-PET
   bib: mellak2025direct3gamma
 
 - id: one-linear-layer
-  icon: one-linear-layer
   title: One Linear Layer is All You Need for Positron Range Estimation and Correction
-  short_title: One Linear Layer
   venue: IEEE NSS/MIC
   year: 2024
-  tldr: Positron-range blurring as a sparse linear layer whose weights a graph network predicts from the attenuation map, so forward and transpose share the same weights.
   affiliations:
     - LaTIM, INSERM UMR 1101, Université de Bretagne Occidentale, Brest, France
   authors:
@@ -299,32 +262,23 @@
       height: 299
       alt: "Feature extraction from attenuation and distance maps, voxels mapped to graph nodes, and edge-weight prediction with an MLP for the forward and transposed operators"
       caption: "GNN-based prediction of the sparse linear layer weights: feature extraction from the attenuation and distance maps (left), voxels mapped to graph nodes (middle), and graph building with edge-weight prediction by an MLP (right). The same weights define B(μ) and B(μ)ᵀ."
-  links:
-    doi: 10.1109/NSS/MIC/RTSD57108.2024.10657784
   bib: mellak2024linear
 
 - id: oct-uveitis
-  icon: oct-uveitis
   title: A Machine Learning Framework for the Quantification of Experimental Uveitis in Murine OCT
-  short_title: OCT Uveitis
   venue: Biomed. Opt. Express
   year: 2023
-  tldr: Machine learning that grades and quantifies experimental uveitis from 3-D OCT scans of the mouse retina.
   affiliations:
     - Université Côte d'Azur, Inria, CNRS, I3S, Sophia Antipolis, France
     - University of Bristol, Bristol, United Kingdom
   authors:
     - { name: Youness Mellak, aff: [1], self: true }
     - { name: Alin Achim, aff: [2] }
-    - { name: Amy Ward }
+    - { name: Amy Ward, aff: [2] }
     - { name: Lindsay Nicholson, aff: [2] }
     - { name: Xavier Descombes, aff: [1] }
   abstract: >-
     A machine learning framework for grading and quantifying experimental uveitis from three-dimensional
     optical coherence tomography (OCT) data of the murine retina, covering severity grading, explainability
     and three-dimensional instance segmentation.
-  links:
-    doi: 10.1364/BOE.489271
-    pdf: https://pmc.ncbi.nlm.nih.gov/articles/PMC10333217/pdf/boe-14-7-3413.pdf
-    code: https://github.com/Mellak/Toolbox-for-the-analysis-of-3D-OCT-images-of-murine-retina
   bib: mellak2023uveitis

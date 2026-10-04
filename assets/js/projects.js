@@ -1,4 +1,4 @@
-// Pill buttons (BibTeX toggle + copy), project popups and animated project icons.
+// Pill buttons (BibTeX toggle + copy), project popups, animated publication icons and toasts.
 (function () {
   "use strict";
 
@@ -60,8 +60,7 @@
     if (!dialog || typeof dialog.showModal !== "function") return false;
     if (openDialog && openDialog !== dialog) openDialog.close();
     if (!dialog.open) {
-      var card = document.querySelector('[data-project-card="' + id + '"]');
-      returnFocusTo = opener || (card && card.querySelector("[data-project-open]")) || null;
+      returnFocusTo = opener || document.querySelector('.pub-icon[data-project-open="' + id + '"]') || null;
       dialog.showModal();
       dialog.scrollTop = 0;
       document.body.classList.add("project-dialog-open");
@@ -110,7 +109,7 @@
     });
   });
 
-  // Links and buttons that open a popup; fall back to navigating to /projects/#id.
+  // Icons, links and buttons that open a popup; fall back to navigating to /publications/#id.
   document.querySelectorAll("[data-project-open]").forEach(function (link) {
     link.addEventListener("click", function (event) {
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.button === 1) return;
@@ -121,20 +120,31 @@
     });
   });
 
-  // Clicking anywhere on a card (outside its links/buttons) opens the popup.
-  document.querySelectorAll("[data-project-card]").forEach(function (card) {
-    card.addEventListener("click", function (event) {
-      if (event.target.closest("a, button, pre, .bibtex-block")) return;
-      open(card.getAttribute("data-project-card"), card.querySelector("[data-project-open]"));
-    });
-  });
-
   function openFromHash() {
     var id = decodeURIComponent(window.location.hash.slice(1));
     if (id && dialogFor(id)) open(id);
   }
   window.addEventListener("hashchange", openFromHash);
   openFromHash();
+
+  // --- Toast notification (e.g. CV page without a PDF) ----------------------
+  var toast = document.querySelector(".site-toast");
+  var toastTimer = null;
+  document.querySelectorAll("[data-toast]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      if (!toast) return;
+      toast.textContent = button.getAttribute("data-toast");
+      toast.hidden = false;
+      toast.classList.add("is-visible");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () {
+        toast.classList.remove("is-visible");
+        toastTimer = setTimeout(function () {
+          toast.hidden = true;
+        }, 250);
+      }, 3500);
+    });
+  });
 
   // --- Animated icons: play only while on screen, never with reduced motion --
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
