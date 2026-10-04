@@ -1,0 +1,5 @@
+<svg class="pi pi-oct-uveitis" viewBox="0 0 100 100" width="100" height="100" aria-hidden="true" focusable="false">
+<defs><linearGradient id="pi-oct-g" x1="0" x2="1"><stop offset="0" stop-color="currentColor" stop-opacity="0"/><stop offset="1" stop-color="currentColor" stop-opacity=".35"/></linearGradient></defs>
+<path class="pi-ly pi-ly0" d="M4 34Q27 29 50 34T96 34"/><path class="pi-ly pi-ly1" d="M4 46Q27 40 50 46T96 46"/><path class="pi-ly pi-ly2" d="M4 56Q27 50 50 56T96 56"/><path class="pi-ly pi-ly3" d="M4 66Q27 61 50 66T96 66"/><path class="pi-ly pi-ly4" d="M4 76Q27 72 50 76T96 76"/>
+<g class="pi-scan"><rect x="34" y="18" width="16" height="70" fill="url(#pi-oct-g)"/><line x1="50" y1="16" x2="50" y2="90"/></g>
+</svg>
