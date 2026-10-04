@@ -56,23 +56,6 @@ layout: default
       {% include latest_posts.liquid %}
     {% endif %}
 
-    <!-- Selected projects -->
-    {% if page.selected_projects %}
-      <h2>
-        <a href="{{ '/projects/' | relative_url }}" style="color: inherit">selected projects</a>
-      </h2>
-      <div class="project-grid project-grid-strip">
-        {% for project_id in page.selected_projects %}
-          {% assign project = site.data.projects | where: 'id', project_id | first %}
-          {% include project_card.liquid project=project %}
-        {% endfor %}
-      </div>
-      {% for project_id in page.selected_projects %}
-        {% assign project = site.data.projects | where: 'id', project_id | first %}
-        {% include project_dialog.liquid project=project %}
-      {% endfor %}
-    {% endif %}
-
     <!-- Selected papers -->
     {% if page.selected_papers %}
       <h2>

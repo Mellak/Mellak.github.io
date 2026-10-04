@@ -11,7 +11,6 @@ profile:
   more_info: >
     <p><a href="mailto:youness.mellak@univ-brest.fr">youness.mellak@univ-brest.fr</a></p>
 
-selected_projects: [continuous-3d-ldm, ddconv, direct3gamma]
 selected_papers: true
 social: true
 announcements:
@@ -26,9 +25,9 @@ I am a postdoctoral researcher at [LaTIM](https://latim.univ-brest.fr/), [Univer
 
 I am particularly interested in scalable generative priors for three-dimensional reconstruction, direct PET reconstruction from detector measurements, positron-range correction, and physics-informed learning. My current research explores diffusion and flow models for PET, CT, and MRI at clinical volume sizes.
 
-I completed my Ph.D. at LaTIM on direct PET reconstruction, positron-range modeling and correction, and three-gamma PET; the [thesis is available on HAL](https://theses.hal.science/tel-05465688).
+I completed my Ph.D. at LaTIM in 2025 with the thesis [*Deep learning approaches for PET imaging: three-gamma PET, positron range correction and direct reconstruction*](https://theses.hal.science/tel-05465688).
 
-Code and material related to my work can be found on the [projects]({{ '/projects/' | relative_url }}) and [publications]({{ '/publications/' | relative_url }}) pages and on [GitHub](https://github.com/Mellak). The best way to reach me is by email.
+Code and material related to my work can be found on the [publications]({{ '/publications/' | relative_url }}) page and on [GitHub](https://github.com/Mellak). The best way to reach me is by email.
 
 ## experience
 

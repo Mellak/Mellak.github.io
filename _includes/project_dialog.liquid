@@ -1,5 +1,9 @@
-{%- comment -%} Project popup. Parameter: project (an entry of site.data.projects). {%- endcomment -%}
+{%- comment -%}
+  Project popup, rendered next to its publication by _layouts/bib.liquid.
+  Parameters: project (an entry of site.data.projects), entry (the bibliography entry).
+{%- endcomment -%}
 {%- assign p = include.project -%}
+{%- assign e = include.entry -%}
 {%- assign dialog_bibtex_id = p.id | prepend: 'popup-bibtex-' -%}
 <dialog class="project-dialog" id="project-{{ p.id }}" data-project="{{ p.id }}" aria-labelledby="project-{{ p.id }}-title">
   <button type="button" class="project-dialog-close" data-project-close aria-label="Close">
@@ -23,11 +27,13 @@
       </ul>
       {%
         include pill_buttons.liquid
-        doi=p.links.doi
-        arxiv=p.links.arxiv
-        pdf=p.links.pdf
-        code=p.links.code
+        doi=e.doi
+        publication=e.url
+        arxiv=e.arxiv
+        pdf=e.pdf
+        code=e.code
         bibtex_id=dialog_bibtex_id
+        website=e.website
       %}
     </header>
 
@@ -59,8 +65,7 @@
 
     <section class="project-section">
       <h3>BibTeX</h3>
-      {%- assign dialog_bibtex = p.bib | bibtex_for -%}
-      {% include bibtex_block.liquid id=dialog_bibtex_id bibtex=dialog_bibtex open=true %}
+      {% include bibtex_block.liquid id=dialog_bibtex_id bibtex=e.bibtex open=true %}
     </section>
   </div>
 </dialog>
