@@ -1,0 +1,46 @@
+---
+layout: page
+permalink: /cv/
+title: CV
+description: Postdoctoral researcher at LaTIM, INSERM UMR 1101, Université de Bretagne Occidentale, Brest.
+nav: true
+nav_order: 3
+---
+{% capture cv_pdf_exists %}{% file_exists assets/pdf/cv.pdf %}{% endcapture %}
+<div class="cv-page">
+  <div class="cv-contact">
+    <div class="pill-buttons">
+      {% if cv_pdf_exists == 'true' %}
+        <a class="pill-btn" href="{{ '/assets/pdf/cv.pdf' | relative_url }}"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i><span>CV (PDF)</span></a>
+      {% endif %}
+      <a class="pill-btn" href="mailto:{{ site.data.socials.email | encode_email }}"><i class="fa-solid fa-envelope" aria-hidden="true"></i><span>{{ site.data.socials.email }}</span></a>
+      <a class="pill-btn" href="https://github.com/{{ site.data.socials.github_username }}"><i class="fa-brands fa-github" aria-hidden="true"></i><span>GitHub</span></a>
+      <a class="pill-btn" href="https://www.linkedin.com/in/{{ site.data.socials.linkedin_username }}"><i class="fa-brands fa-linkedin" aria-hidden="true"></i><span>LinkedIn</span></a>
+    </div>
+  </div>
+
+  <h2>Experience</h2>
+  {% include experience.liquid %}
+
+  <h2>Ph.D. thesis</h2>
+  <p>
+    LaTIM, INSERM UMR 1101, Université de Bretagne Occidentale, 2021–2025. Direct PET reconstruction, positron-range modeling and
+    correction, Monte Carlo surrogate modeling, and three-gamma PET.
+    <a href="https://theses.hal.science/tel-05465688">Full text on HAL</a>.
+  </p>
+
+  <h2>Projects</h2>
+  <ul class="cv-projects">
+    {%- for project in site.data.projects %}
+      <li>
+        <a href="{{ '/projects/' | relative_url }}#{{ project.id }}">{{ project.short_title }}</a>
+        <span class="venue-badge">{{ project.venue }} {{ project.year }}</span> — {{ project.tldr }}
+      </li>
+    {%- endfor %}
+  </ul>
+
+  <h2>Publications</h2>
+  <div class="publications">
+    {% bibliography %}
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<svg class="pi pi-ddconv" viewBox="0 0 100 100" width="100" height="100" aria-hidden="true" focusable="false">
+<defs><radialGradient id="pi-dd-k"><stop offset="0" stop-color="currentColor" stop-opacity=".85"/><stop offset=".55" stop-color="currentColor" stop-opacity=".3"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></radialGradient></defs>
+<rect class="pi-soft" x="6" y="16" width="44" height="68" rx="7"/>
+<rect class="pi-dense" x="50" y="16" width="44" height="68" rx="7"/>
+<g class="pi-lbl"><text x="28" y="11">lung</text><text x="72" y="11">bone</text></g>
+<circle class="pi-k" cx="28" cy="50" r="19" fill="url(#pi-dd-k)"/>
+<circle class="pi-k pi-k2" cx="72" cy="50" r="7" fill="url(#pi-dd-k)"/>
+<circle class="pi-pt" cx="28" cy="50" r="2.2"/><circle class="pi-pt" cx="72" cy="50" r="2.2"/>
+</svg>

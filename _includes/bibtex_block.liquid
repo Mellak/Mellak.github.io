@@ -1,0 +1,11 @@
+{%- comment -%}
+  Inline BibTeX block with a copy button. Parameters: id, bibtex, open (show by default).
+{%- endcomment -%}
+<div class="bibtex-block" id="{{ include.id }}" {% unless include.open %}hidden{% endunless %}>
+  <button type="button" class="bibtex-copy" aria-label="Copy BibTeX to clipboard">
+    <i class="fa-solid fa-clipboard" aria-hidden="true"></i><span>Copy</span>
+  </button>
+  {% highlight bibtex %}
+  {{- include.bibtex | hideCustomBibtex -}}
+  {% endhighlight %}
+</div>

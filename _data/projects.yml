@@ -1,0 +1,249 @@
+# Projects shown on /projects/ (cards + popups) and in the home page "Selected projects" strip.
+#
+# id:           URL hash (/projects/#id) and popup id
+# icon:         animated card icon in _includes/project_icons/<icon>.svg
+# bib:          key in _bibliography/papers.bib (used for the BibTeX block and to add a
+#               "Project" button to the publication entry)
+# authors[].aff: indexes into affiliations (1-based)
+# links:        doi, arxiv, pdf (file in assets/pdf/ or URL), code
+# figures:      src (in assets/img/projects/), alt, caption; Figure 1 is the method overview,
+#               Figure 2 the key results
+
+- id: continuous-3d-ldm
+  icon: continuous-3d-ldm
+  title: Continuous 3-D Latent Diffusion for Medical Generation and Reconstruction
+  short_title: Continuous 3-D Latent Diffusion
+  venue: Under review
+  year: 2026
+  tldr: One continuous 3-D latent prior that generates full CT/MRI volumes and reconstructs sparse-view CT and accelerated MRI on a single GPU.
+  affiliations:
+    - LaTIM, INSERM UMR 1101, Université de Bretagne Occidentale, Brest, France
+  authors:
+    - { name: Youness Mellak, aff: [1], self: true }
+    - { name: Antoine De Paepe, aff: [1] }
+    - { name: Dimitris Visvikis, aff: [1] }
+    - { name: Alexandre Bousse, aff: [1] }
+  abstract: >-
+    High-resolution three-dimensional (3-D) medical diffusion models remain constrained by the cost of
+    processing full volumes, even when denoising is performed in a compact latent space. We introduce a
+    continuous 3-D latent diffusion model (LDM) framework for computed tomography (CT) and magnetic resonance
+    imaging (MRI) generation and measurement-guided reconstruction. Its central component is a compact
+    autoencoder (AE) with a coordinate-conditioned local implicit image function (LIIF) decoder that represents
+    a volume as a continuous function of spatial coordinates. By evaluating the convolutional decoder once on
+    the latent grid and restricting repeated computation to a lightweight implicit head, the proposed design
+    avoids overlapping sub-volume decoding while remaining differentiable for inverse-problem optimization. We
+    evaluate the framework on CT volumes of 512³ voxels and MRI volumes of 256³ voxels. On high-resolution CT,
+    the proposed AE is approximately ×12–32 faster than the evaluated reference autoencoders, achieves the
+    lowest peak graphics processing unit (GPU) memory use, and retains comparable structural fidelity despite a
+    moderate reduction in voxel-level accuracy. The resulting frozen 3-D latent prior generates coherent full
+    volumes without visible patch seams and can be applied, without task-specific retraining, to sparse-view CT
+    and accelerated MRI reconstruction through hard data consistency. Although direct pixel-domain
+    reconstruction remains more accurate, the results demonstrate that a single volumetric latent prior can
+    support both unconditional generation and measurement-conditioned reconstruction on one GPU.
+  links:
+    pdf: continuous_3d_latent_diffusion.pdf
+    code: https://github.com/Mellak/continuous-3d-latent-diffusion
+  bib: mellak2026continuous3d
+
+- id: latent-implicit
+  icon: latent-implicit
+  title: 3D Latent Implicit Diffusion for Scalable Volume Generation
+  short_title: 3D Latent Implicit Diffusion
+  venue: IEEE NSS/MIC
+  year: 2026
+  tldr: A lightweight 3-D autoencoder with an implicit LIIF decoder lets a latent DDPM generate 512³ volumes on one 48 GB GPU.
+  affiliations:
+    - LaTIM, INSERM UMR 1101, Université de Bretagne Occidentale, Brest, France
+  authors:
+    - { name: Youness Mellak, aff: [1], self: true }
+    - { name: Alexandre Bousse, aff: [1] }
+    - { name: Antoine De Paepe, aff: [1] }
+    - { name: Dimitris Visvikis, aff: [1] }
+  abstract: >-
+    We address the problem of full-volume three-dimensional (3-D) medical image generation under limited GPU
+    memory. Scaling generative models to clinical-size volumes remains challenging because both voxel-space
+    diffusion and conventional 3-D autoencoders require substantial memory. We propose a memory-efficient latent
+    implicit generation framework that combines a lightweight 3-D autoencoder with a coordinate-conditioned
+    local implicit image function (LIIF) decoder. The encoder compresses the input volume into a compact 3-D
+    latent grid, while the implicit decoder reconstructs the volume by querying continuous spatial coordinates
+    from learned latent features. A full-volume 3-D diffusion model is then trained directly in this latent
+    space. This design enables volumetric generation of high-resolution medical images, up to 512³ volumes,
+    using a single 48 GB GPU for both autoencoder and diffusion training.
+  links:
+    pdf: 3d_latent_implicit_diffusion_2026.pdf
+  bib: mellak2026latentimplicit
+
+- id: frozen-sd-vae
+  icon: frozen-sd-vae
+  title: Frozen Stable Diffusion VAE as a Slice-Wise Encoder for Scalable 3-D Medical Image Generation
+  short_title: Frozen SD-VAE Slice-Wise Encoder
+  venue: IEEE NSS/MIC
+  year: 2026
+  tldr: Reuse a frozen 2-D Stable Diffusion VAE slice by slice, then train a full-volume flow model on the stacked latents of CT, PET and MRI.
+  affiliations:
+    - LaTIM, INSERM UMR 1101, Université de Bretagne Occidentale, Brest, France
+  authors:
+    - { name: Youness Mellak, aff: [1], self: true }
+    - { name: Alexandre Bousse, aff: [1] }
+    - { name: Antoine De Paepe, aff: [1] }
+    - { name: Dimitris Visvikis, aff: [1] }
+  abstract: >-
+    We address the problem of full-volume three-dimensional (3-D) medical image generation under limited GPU
+    memory. Existing 3-D generative methods are difficult to scale to large clinical volumes, and latent
+    approaches usually require training a dedicated medical autoencoder before generative modeling, which adds
+    substantial cost and complexity. To remove this bottleneck, we propose a latent flow framework that uses a
+    frozen pretrained Stable Diffusion autoencoder (SD-VAE) as a slice-wise encoder for medical volumes. The
+    resulting slice latents are stacked into a 3D latent tensor, and a full-volume flow model is trained
+    directly in this compact space. This design avoids modality-specific autoencoder training while preserving
+    a volumetric generative formulation suitable for large medical images.
+  links:
+    pdf: frozen_stable_diffusion_vae_2026.pdf
+  bib: mellak2026frozenvae
+
+- id: ddconv
+  icon: ddconv
+  title: Dual-Input Dynamic Convolution for Positron Range Correction in PET Image Reconstruction
+  short_title: DDConv
+  venue: IEEE TRPMS
+  year: 2025
+  tldr: A CNN predicts a positron-range kernel for every voxel from the local attenuation map, giving a blurring operator with an exact transpose for iterative PET reconstruction.
+  affiliations:
+    - LaTIM, INSERM UMR 1101, Université de Bretagne Occidentale, Brest, France
+  authors:
+    - { name: Youness Mellak, aff: [1], self: true }
+    - { name: Alexandre Bousse, aff: [1] }
+    - { name: Thibaut Merlin, aff: [1] }
+    - { name: Élise Émond }
+    - { name: Mikko Hakulinen }
+    - { name: Dimitris Visvikis, aff: [1] }
+  abstract: >-
+    Positron range (PR) blurs PET images, and the effect grows with higher-energy emitters such as ⁶⁸Ga and
+    with the sub-millimetre resolution of recent scanners. In iterative reconstruction, PR can be modelled as
+    an image-domain blurring operator B(μ), but this operator varies with the surrounding tissue and is usually
+    approximated by a spatially invariant kernel, which underestimates the blur in low-density regions such as
+    the lungs. Learned corrections that apply a CNN before each forward projection improve contrast but do not
+    provide the matching backward operator. We model B(μ) as a transposed convolution with spatially varying
+    kernels: a CNN predicts the PR point-spread function of each voxel from its local attenuation neighbourhood
+    and a distance map. The network is trained on Monte Carlo (GATE) point-spread functions simulated in random
+    lung, water and bone material patches. Because B(μ) and B(μ)ᵀ share the same predicted kernels, the
+    operator plugs consistently into MLEM. On digital and XCAT phantoms, DDConv reproduces the Monte Carlo
+    annihilation distributions at tissue interfaces where a spatially variant tissue-dependent (SVTD) model
+    fails, and it was also evaluated in reconstructions of Monte Carlo and patient data.
+  links:
+    doi: 10.1109/TRPMS.2025.3647264
+    arxiv: 2503.00587
+    code: https://github.com/Mellak/ddconv-prc
+  bib: mellak2025ddconv
+
+- id: positron-gan
+  icon: positron-gan
+  title: Fast-Track of F-18 Positron Paths Simulations Using Generative Adversarial Networks
+  short_title: Positron-Path GAN
+  venue: IEEE ISBI
+  year: 2024
+  tldr: A transformer GAN generates complete positron tracks, positions and remaining energy at every interaction, as a fast surrogate for Monte Carlo transport.
+  affiliations:
+    - LaTIM, INSERM UMR 1101, Université de Bretagne Occidentale, Brest, France
+  authors:
+    - { name: Youness Mellak, aff: [1], self: true }
+    - { name: Konstantinos Chatzipapas, aff: [1] }
+    - { name: Alexandre Bousse, aff: [1] }
+    - { name: Catherine Cheze-Le Rest }
+    - { name: Dimitris Visvikis, aff: [1] }
+    - { name: Julien Bert, aff: [1] }
+  abstract: >-
+    Monte Carlo simulation is the gold standard for modelling positron transport in PET, but tracking each
+    positron interaction by interaction until annihilation is computationally expensive. We train a
+    conditional generative adversarial network to simulate complete positron trajectories in homogeneous
+    media. Each path is a sequence of 3-D positions and remaining kinetic energies, generated in one shot by a
+    transformer-encoder generator conditioned on the initial energy, the emission direction and the number of
+    interactions, and judged by a ViT-like discriminator. Extra loss terms keep the energy positive and
+    decreasing along the path and align the first step with the requested direction. The endpoints of the
+    generated paths reproduce the GATE point-spread functions in lung, water and bone. In the thesis, the
+    approach is extended to ⁶⁸Ga and to heterogeneous media by restarting the generator at each material
+    boundary.
+  links:
+    doi: 10.1109/ISBI56570.2024.10635834
+    arxiv: 2403.06307
+    code: https://github.com/Mellak/Particles_Tracking_GAN
+  bib: mellak2024fasttrack
+
+- id: direct3gamma
+  icon: direct3gamma
+  title: "Direct3γ: A Pipeline for Direct Three-Gamma PET Image Reconstruction"
+  short_title: Direct3γ
+  venue: IEEE TRPMS
+  year: 2025
+  tldr: An event-by-event pipeline that turns three-gamma PET detections into 3-D images, from photon sequencing to learned refinement.
+  affiliations:
+    - LaTIM, INSERM UMR 1101, Université de Bretagne Occidentale, Brest, France
+  authors:
+    - { name: Youness Mellak, aff: [1], self: true }
+    - { name: Alexandre Bousse, aff: [1] }
+    - { name: Thibaut Merlin, aff: [1] }
+    - { name: Debora Giovagnoli }
+    - { name: Dimitris Visvikis, aff: [1] }
+  abstract: >-
+    In three-gamma PET, a positron emitter that also releases a prompt gamma photon gives, for each event, a
+    line of response from the two annihilation photons and a Compton cone from the third photon; their
+    intersection localises the emission point along the line. Direct3γ is an end-to-end, event-by-event
+    pipeline for reconstructing 3-D images from such data. It covers photon sequencing, uncertainty-aware
+    backprojection, attenuation correction and learned image refinement.
+  links:
+    doi: 10.1109/TRPMS.2025.3577810
+    arxiv: 2407.18337
+    code: https://github.com/Mellak/Direct-Three-Gamma-PET
+  bib: mellak2025direct3gamma
+
+- id: one-linear-layer
+  icon: one-linear-layer
+  title: One Linear Layer is All You Need for Positron Range Estimation and Correction
+  short_title: One Linear Layer
+  venue: IEEE NSS/MIC
+  year: 2024
+  tldr: Positron-range blurring as a sparse linear layer whose weights a graph network predicts from the attenuation map, so forward and transpose share the same weights.
+  affiliations:
+    - LaTIM, INSERM UMR 1101, Université de Bretagne Occidentale, Brest, France
+  authors:
+    - { name: Youness Mellak, aff: [1], self: true }
+    - { name: Alexandre Bousse, aff: [1] }
+    - { name: Thibaut Merlin, aff: [1] }
+    - { name: Élise Émond }
+    - { name: Dimitris Visvikis, aff: [1] }
+  abstract: >-
+    Positron range blurring can be written as a linear operator B(μ) acting on the activity image, but the
+    operator depends on the tissue around each voxel. We model B(μ) as a sparse linear layer whose non-zero
+    entries are directed edges between each voxel and its neighbours. Each voxel becomes a node of a graph, and
+    the weight of every edge is regressed by a small network from the attenuation at the receiving voxel, a
+    global feature vector extracted from the attenuation map by a CNN, and the distance between the two
+    voxels. The same learned weights define both the forward operator and its transpose, which keeps
+    projection and backprojection consistent inside iterative PET reconstruction.
+  links:
+    doi: 10.1109/NSS/MIC/RTSD57108.2024.10657784
+  bib: mellak2024linear
+
+- id: oct-uveitis
+  icon: oct-uveitis
+  title: A Machine Learning Framework for the Quantification of Experimental Uveitis in Murine OCT
+  short_title: OCT Uveitis
+  venue: Biomed. Opt. Express
+  year: 2023
+  tldr: Machine learning that grades and quantifies experimental uveitis from 3-D OCT scans of the mouse retina.
+  affiliations:
+    - Université Côte d'Azur, Inria, CNRS, I3S, Sophia Antipolis, France
+    - University of Bristol, Bristol, United Kingdom
+  authors:
+    - { name: Youness Mellak, aff: [1], self: true }
+    - { name: Alin Achim, aff: [2] }
+    - { name: Amy Ward }
+    - { name: Lindsay Nicholson, aff: [2] }
+    - { name: Xavier Descombes, aff: [1] }
+  abstract: >-
+    A machine learning framework for grading and quantifying experimental uveitis from three-dimensional
+    optical coherence tomography (OCT) data of the murine retina, covering severity grading, explainability
+    and three-dimensional instance segmentation.
+  links:
+    doi: 10.1364/BOE.489271
+    pdf: https://pmc.ncbi.nlm.nih.gov/articles/PMC10333217/pdf/boe-14-7-3413.pdf
+    code: https://github.com/Mellak/Toolbox-for-the-analysis-of-3D-OCT-images-of-murine-retina
+  bib: mellak2023uveitis

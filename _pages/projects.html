@@ -1,0 +1,18 @@
+---
+layout: page
+permalink: /projects/
+title: Projects
+description: Research projects in PET reconstruction, positron-range modelling and 3-D generative models. Click a card for the abstract, figures and BibTeX.
+nav: true
+nav_order: 2
+---
+
+<div class="project-grid">
+  {% for project in site.data.projects %}
+    {% include project_card.liquid project=project %}
+  {% endfor %}
+</div>
+
+{% for project in site.data.projects %}
+  {% include project_dialog.liquid project=project %}
+{% endfor %}

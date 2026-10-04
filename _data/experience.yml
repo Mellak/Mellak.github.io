@@ -1,0 +1,19 @@
+# Shown on the About page and the CV page (_includes/experience.liquid).
+- role: Postdoctoral Researcher
+  dates: Oct 2025 - present
+  place: LaTIM, INSERM UMR 1101 · Brest, France
+  logo: experience-postdoc.png
+  logo_alt: LaTIM logo
+  summary: Generative modeling and learned priors for large-scale 3D inverse problems, including low-dose PET, sparse-view CT, and undersampled MRI.
+- role: Ph.D. Researcher
+  dates: Oct 2021 - Sep 2025
+  place: LaTIM · Université de Bretagne Occidentale
+  logo: experience-phd.png
+  logo_alt: LaTIM and UBO logos
+  summary: Direct PET reconstruction, positron-range correction, Monte Carlo surrogate modeling, and direct three-gamma PET reconstruction.
+- role: Research Intern
+  dates: Mar 2021 - Sep 2021
+  place: Inria Sophia Antipolis · i3S · Nice, France
+  logo: experience-internship.png
+  logo_alt: Inria and i3S logos
+  summary: Learning-based analysis of volumetric OCT data, including severity grading, explainability, and three-dimensional instance segmentation.
