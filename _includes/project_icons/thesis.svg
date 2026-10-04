@@ -1,0 +1,6 @@
+<svg class="pi pi-thesis" viewBox="0 0 100 100" width="100" height="100" aria-hidden="true" focusable="false">
+<path class="pi-cover" d="M8 24Q29 18 50 26Q71 18 92 24V84Q71 78 50 86Q29 78 8 84Z"/>
+<path class="pi-spine" d="M50 26V86"/>
+<path class="pi-lines" d="M17 34h22M17 43h22M17 52h22M17 61h22M17 70h22M61 34h22M61 43h22M61 52h22M61 61h22M61 70h22"/>
+<g class="pi-leaf"><path d="M50 26Q71 18 88 23V80Q71 75 50 83Z"/></g>
+</svg>

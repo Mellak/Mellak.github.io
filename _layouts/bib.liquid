@@ -1,52 +1,29 @@
 ---
 ---
-<div class="row">
-  {% if site.enable_publication_thumbnails %}
-    <div class="col col-sm-2 abbr">
-      {%- if entry.abbr -%}
-        {%- if site.data.venues[entry.abbr] -%}
-          {% assign venue_style = null %}
-          {% if site.data.venues[entry.abbr].color != blank %}
-            {% assign venue_style = site.data.venues[entry.abbr].color | prepend: 'style="background-color:' | append: '"' %}
-          {%- endif -%}
-          <abbr
-            class="badge rounded w-100"
-            {% if venue_style %}
-              {{ venue_style }}
-            {% endif -%}
-          >
-            {% if site.data.venues[entry.abbr].url %}
-              <a href="{{ site.data.venues[entry.abbr].url }}">{{ entry.abbr }}</a>
-            {% else %}
-              <div>{{- entry.abbr -}}</div>
-            {% endif %}
-          </abbr>
-        {% else %}
-          <abbr class="badge rounded w-100">{{ entry.abbr }}</abbr>
-        {% endif %}
-      {% endif %}
-      {% if entry.preview %}
-        {% if entry.preview contains '://' %}
-          <img class="preview z-depth-1 rounded" src="{{ entry.preview }}">
-        {% else %}
-          {% assign entry_path = entry.preview | prepend: '/assets/img/publication_preview/' %}
-          {%
-            include figure.liquid
-            loading="eager"
-            path=entry_path
-            sizes = "200px"
-            class="preview z-depth-1 rounded"
-            zoomable=true
-            avoid_scaling=true
-            alt=entry.preview
-          %}
-        {% endif %}
-      {% endif %}
-    </div>
+{%- assign entry_project = null -%}
+{%- for project in site.data.projects -%}
+  {%- if project.bib == entry.key -%}
+    {%- assign entry_project = project -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+<div class="pub-entry">
+  {% if entry.icon %}
+    {% if entry_project %}
+      <a
+        class="pub-icon project-icon"
+        href="{{ '/publications/' | relative_url }}#{{ entry_project.id }}"
+        data-project-open="{{ entry_project.id }}"
+        aria-label="Open the project page of “{{ entry.title | strip_html | escape }}”"
+        >{% include project_icons/{{ entry.icon }}.svg %}</a
+      >
+    {% else %}
+      <div class="pub-icon project-icon">{% include project_icons/{{ entry.icon }}.svg %}</div>
+    {% endif %}
   {% endif %}
 
   <!-- Entry bib key -->
-  <div id="{{ entry.key }}" class="{% if site.enable_publication_thumbnails %}col-sm-8{% else %}col-sm-10{% endif %}">
+  <div id="{{ entry.key }}" class="pub-body">
     <!-- Title -->
     <div class="title">{{ entry.title }}</div>
     <!-- Author -->
@@ -156,7 +133,7 @@
     {% elsif proceedings contains entry.type %}
       {% capture entrytype %}<em>In {{ entry.booktitle }}</em>{% endcapture %}
     {% elsif thesis contains entry.type %}
-      {% capture entrytype %}<em>{{ entry.school }}</em>{% endcapture %}
+      {% capture entrytype %}<em>Ph.D. thesis, {{ entry.school }}</em>{% endcapture %}
     {% else %}
       {% capture entrytype %}{% endcapture %}
     {% endif %}
@@ -170,7 +147,7 @@
       {% capture entrytype %}{{ entrytype }}{{ ", " }}{{ entry.location }}{% endcapture %}
     {% endif -%}
     {% if entry.additional_info %}
-      {% capture entrytype %}{{ entrytype }}{{ entry.additional_info | markdownify | remove: '<p>' | remove: '</p>' }}{% endcapture %}
+      {% capture entrytype %}{{ entrytype }}{{ entry.additional_info | markdownify | remove: '<p>' | remove: '</p>' | strip }}{% endcapture %}
     {% endif %}
     {% capture hook_exists %}{% file_exists _includes/hook/bib.liquid %}{% endcapture %}
     {% if hook_exists == 'true' %}
@@ -186,13 +163,6 @@
     </div>
 
     <!-- Links/Buttons -->
-    {% assign entry_project = null %}
-    {% for project in site.data.projects %}
-      {% if project.bib == entry.key %}
-        {% assign entry_project = project.id %}
-        {% break %}
-      {% endif %}
-    {% endfor %}
     {% if entry.bibtex_show %}
       {% assign entry_bibtex_id = entry.key | prepend: 'bibtex-' %}
     {% else %}
@@ -212,7 +182,7 @@
       pdf=entry.pdf
       code=entry.code
       bibtex_id=entry_bibtex_id
-      project=entry_project
+      project=entry_project.id
       website=entry.website
     %}
     {% if site.enable_publication_badges %}
@@ -323,3 +293,6 @@
     {% endif %}
   </div>
 </div>
+{% if entry_project %}
+  {% include project_dialog.liquid project=entry_project entry=entry %}
+{% endif %}

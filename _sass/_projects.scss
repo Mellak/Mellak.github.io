@@ -1,5 +1,4 @@
-// Pill link buttons (publications, project cards, project popups), project cards,
-// project popups and the animated project icons.
+// Pill link buttons, publication icons, project popups, the animated icons and toasts.
 
 // ---------------------------------------------------------------------------
 // Pill buttons
@@ -117,42 +116,19 @@ html[data-theme="dark"] {
 }
 
 // ---------------------------------------------------------------------------
-// Project cards
+// Publication entries: animated icon next to each publication
 // ---------------------------------------------------------------------------
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  margin: 1rem 0 2rem;
-
-  &.project-grid-strip {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-.project-card {
+.pub-entry {
   display: grid;
   grid-template-columns: 100px minmax(0, 1fr);
-  gap: 1rem;
+  gap: 1.25rem;
   align-items: start;
-  padding: 1rem;
-  border: 1px solid var(--global-divider-color);
-  border-radius: 12px;
-  background: var(--global-card-bg-color);
-  cursor: pointer;
-  transition:
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
-
-  &:hover,
-  &:focus-within {
-    border-color: var(--global-theme-color);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  }
-  .pill-buttons {
-    margin-bottom: 0;
-  }
+}
+.pub-body {
+  min-width: 0;
 }
 .project-icon {
+  display: block;
   width: 100px;
   height: 100px;
   border-radius: 10px;
@@ -164,21 +140,13 @@ html[data-theme="dark"] {
     height: 100%;
   }
 }
-.project-card-body {
-  min-width: 0;
-}
-.project-card-title {
-  display: block;
-  margin: 0 0 0.3rem;
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.3;
-  color: var(--global-text-color) !important;
-  text-decoration: none !important;
+a.pub-icon {
+  transition: box-shadow 0.15s ease;
 
   &:hover,
   &:focus-visible {
-    color: var(--global-theme-color) !important;
+    box-shadow: 0 0 0 2px var(--global-theme-color);
+    outline: none;
   }
 }
 .venue-badge {
@@ -192,40 +160,41 @@ html[data-theme="dark"] {
   letter-spacing: 0.02em;
   white-space: nowrap;
 }
-.project-tldr {
-  margin: 0.45rem 0 0;
-  font-size: 0.88rem;
-  line-height: 1.45;
-  color: var(--global-text-color-light);
-}
-// Strip on the home page: narrower cards, icon on top
-.project-grid-strip .project-card {
-  grid-template-columns: 1fr;
-}
-
-@media (max-width: 991px) {
-  .project-grid.project-grid-strip {
-    grid-template-columns: 1fr;
-  }
-  .project-grid-strip .project-card {
-    grid-template-columns: 100px minmax(0, 1fr);
-  }
-}
-@media (max-width: 767px) {
-  .project-grid {
-    grid-template-columns: 1fr;
-  }
-}
-@media (max-width: 420px) {
-  .project-card,
-  .project-grid-strip .project-card {
-    grid-template-columns: 72px minmax(0, 1fr);
-    gap: 0.75rem;
-    padding: 0.85rem;
+@media (max-width: 575px) {
+  .pub-entry {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 0.85rem;
   }
   .project-icon {
-    width: 72px;
-    height: 72px;
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+  }
+}
+
+// Toast notification
+.site-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  z-index: 1100;
+  max-width: calc(100% - 2rem);
+  padding: 0.7rem 1.1rem;
+  border-radius: 10px;
+  background: var(--pill-bg);
+  color: var(--pill-text);
+  border: 1px solid var(--pill-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+
+  &.is-visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
   }
 }
 
@@ -913,6 +882,288 @@ body.project-dialog-open {
   }
 }
 
+// Adaptive CBCT: gantry stepping around a moving head (sparse views + motion)
+.pi-adaptive-cbct {
+  .pi-fan {
+    fill: currentColor;
+    fill-opacity: 0.12;
+    stroke: currentColor;
+    stroke-opacity: 0.35;
+    stroke-width: 0.8;
+  }
+  .pi-det {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+  .pi-gantry {
+    transform-box: view-box;
+    transform-origin: 50px 50px;
+  }
+  .pi-skull {
+    fill: var(--global-text-color-light);
+    fill-opacity: 0.25;
+    stroke: var(--global-text-color-light);
+    stroke-width: 1.5;
+  }
+  .pi-nose {
+    fill: none;
+    stroke: var(--global-text-color-light);
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+  }
+}
+.is-playing .pi-adaptive-cbct {
+  .pi-gantry {
+    animation: pi-orbit 4s steps(8) infinite;
+  }
+  .pi-head {
+    animation: pi-sway 4s ease-in-out infinite;
+  }
+}
+@keyframes pi-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pi-sway {
+  0%,
+  100% {
+    transform: none;
+  }
+  50% {
+    transform: translate(3px, -1px) rotate(6deg);
+  }
+}
+
+// Light propagation: photons random-walk between Mie scatterers to the photodetector
+.pi-light-propagation {
+  .pi-xtal {
+    fill: currentColor;
+    fill-opacity: 0.06;
+    stroke: currentColor;
+    stroke-opacity: 0.4;
+    stroke-width: 1.2;
+  }
+  .pi-sc circle {
+    fill: var(--global-text-color-light);
+    opacity: 0.6;
+  }
+  .pi-ph {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.45;
+  }
+  .pi-pmt {
+    fill: var(--global-text-color-light);
+    opacity: 0.4;
+  }
+}
+.is-playing .pi-light-propagation {
+  .pi-ph {
+    stroke-width: 2.2;
+    stroke-dasharray: 0.18 1;
+    animation: pi-photon 3.6s linear infinite both;
+  }
+  .pi-ph2 {
+    animation-delay: 0.25s;
+  }
+  .pi-flash {
+    animation: pi-flash 3.6s ease-out infinite;
+  }
+  .pi-pmt {
+    animation: pi-pmt 3.6s ease-out infinite;
+  }
+}
+@keyframes pi-photon {
+  0% {
+    stroke-dashoffset: 0.18;
+    opacity: 1;
+  }
+  80% {
+    stroke-dashoffset: -1;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -1;
+    opacity: 0;
+  }
+}
+@keyframes pi-flash {
+  0% {
+    transform: scale(2.2);
+  }
+  12%,
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes pi-pmt {
+  0%,
+  70% {
+    opacity: 0.4;
+  }
+  80% {
+    opacity: 1;
+    fill: currentColor;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+// Detector-pixel transformer: attention from detector cells to pixels, cycling
+.pi-pet-transformer {
+  .pi-det rect {
+    fill: currentColor;
+    opacity: 0.85;
+  }
+  .pi-pix rect {
+    fill: var(--global-text-color-light);
+    opacity: 0.3;
+  }
+  .pi-att path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 0.9;
+    opacity: 0.6;
+  }
+  .pi-att rect {
+    fill: currentColor;
+  }
+  .pi-att1,
+  .pi-att2 {
+    opacity: 0;
+  }
+}
+.is-playing .pi-pet-transformer {
+  .pi-att {
+    animation: pi-attn 3.6s ease-in-out infinite both;
+  }
+  .pi-att1 {
+    animation-delay: 1.2s;
+  }
+  .pi-att2 {
+    animation-delay: 2.4s;
+  }
+}
+@keyframes pi-attn {
+  0% {
+    opacity: 0;
+  }
+  8%,
+  30% {
+    opacity: 1;
+  }
+  38%,
+  100% {
+    opacity: 0;
+  }
+}
+
+// Three-gamma (2022): LOR and Compton cone meet at the emission point
+.pi-three-gamma {
+  .pi-cone {
+    fill: currentColor;
+    fill-opacity: 0.12;
+    stroke: currentColor;
+    stroke-width: 1;
+    stroke-dasharray: 2.5 2;
+    opacity: 0.8;
+  }
+  .pi-lor {
+    fill: none;
+    stroke: var(--global-text-color);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  .pi-blob {
+    fill: currentColor;
+    fill-opacity: 0.4;
+    transform: rotate(18.4deg);
+  }
+  .pi-apex {
+    fill: var(--global-text-color-light);
+  }
+  .pi-e {
+    stroke: var(--global-bg-color);
+    stroke-width: 1.2;
+  }
+}
+.is-playing .pi-three-gamma {
+  .pi-lor {
+    animation: pi-3g-a 4s ease-out infinite;
+  }
+  .pi-cone {
+    animation: pi-3g-c 4s ease-out infinite;
+  }
+  .pi-e {
+    animation: pi-3g-e 4s ease-out infinite;
+  }
+  .pi-blobg {
+    animation: pi-st3 4s ease-out infinite;
+  }
+}
+
+// Thesis: open book with a page turning
+.pi-thesis {
+  .pi-cover {
+    fill: currentColor;
+    fill-opacity: 0.1;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+  }
+  .pi-spine {
+    stroke: currentColor;
+    stroke-width: 1.2;
+  }
+  .pi-lines {
+    fill: none;
+    stroke: var(--global-text-color-light);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    opacity: 0.7;
+  }
+  .pi-leaf {
+    transform-box: view-box;
+    transform-origin: 50px 50px;
+    transform: scaleX(0.45);
+
+    path {
+      fill: var(--global-bg-color);
+      stroke: currentColor;
+      stroke-width: 1.2;
+      stroke-linejoin: round;
+    }
+  }
+}
+.is-playing .pi-thesis .pi-leaf {
+  animation: pi-flip 3.6s ease-in-out infinite;
+}
+@keyframes pi-flip {
+  0%,
+  15% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  55%,
+  85% {
+    transform: scaleX(-1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(-1);
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .pi,
   .pi * {
@@ -928,13 +1179,5 @@ body.project-dialog-open {
   }
   .cv-contact .pill-buttons {
     margin-top: 0;
-  }
-  .cv-projects {
-    padding-left: 1.1rem;
-
-    li {
-      margin-bottom: 0.45rem;
-      line-height: 1.5;
-    }
   }
 }

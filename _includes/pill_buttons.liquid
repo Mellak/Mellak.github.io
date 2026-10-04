@@ -1,11 +1,11 @@
 {%- comment -%}
-  Shared link buttons for publications, project cards and project popups.
+  Shared link buttons for publications and their project popups.
   Fixed order; each button appears only when its link exists:
   Publication · arXiv · PDF (only without arXiv) · Code · BibTeX · Project · Website
   Parameters:
     doi, publication (overrides the DOI link, e.g. HAL), arxiv, pdf, code, website
     bibtex_id: id of the inline BibTeX block this button toggles
-    project:   project id (opens its popup, or links to /projects/#id)
+    project:   project id (opens its popup, or links to /publications/#id)
 {%- endcomment -%}
 {%- assign publication_url = include.publication -%}
 {%- if publication_url == blank and include.doi != blank -%}
@@ -41,7 +41,7 @@
     </button>
   {%- endif %}
   {%- if include.project != blank %}
-    <a class="pill-btn" href="{{ '/projects/' | relative_url }}#{{ include.project }}" data-project-open="{{ include.project }}"
+    <a class="pill-btn" href="{{ '/publications/' | relative_url }}#{{ include.project }}" data-project-open="{{ include.project }}"
       ><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span>Project</span></a
     >
   {%- endif %}
