@@ -1,0 +1,63 @@
+{%- comment -%} Project popup. Parameter: project (an entry of site.data.projects). {%- endcomment -%}
+{%- assign p = include.project -%}
+{%- assign dialog_bibtex_id = p.id | prepend: 'popup-bibtex-' -%}
+<dialog class="project-dialog" id="project-{{ p.id }}" data-project="{{ p.id }}" aria-labelledby="project-{{ p.id }}-title">
+  <button type="button" class="project-dialog-close" data-project-close aria-label="Close">
+    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+  </button>
+  <div class="project-dialog-inner">
+    <header class="project-dialog-header">
+      <span class="venue-badge">{{ p.venue }} {{ p.year }}</span>
+      <h2 class="project-dialog-title" id="project-{{ p.id }}-title">{{ p.title }}</h2>
+      <ul class="project-authors">
+        {%- for author in p.authors %}
+          <li{% if author.self %} class="self"{% endif %}>
+            {{- author.name -}}
+            {%- if author.aff -%}<sup>{{ author.aff | join: ',' }}</sup>{%- endif -%}</li>
+        {%- endfor %}
+      </ul>
+      <ul class="project-affiliations">
+        {%- for affiliation in p.affiliations %}
+          <li><sup>{{ forloop.index }}</sup>{{ affiliation }}</li>
+        {%- endfor %}
+      </ul>
+      {%
+        include pill_buttons.liquid
+        doi=p.links.doi
+        arxiv=p.links.arxiv
+        pdf=p.links.pdf
+        code=p.links.code
+        bibtex_id=dialog_bibtex_id
+      %}
+    </header>
+
+    <section class="project-section">
+      <h3>Abstract</h3>
+      <div class="project-abstract"><p>{{ p.abstract }}</p></div>
+    </section>
+
+    {%- for figure in p.figures %}
+      <section class="project-section">
+        <h3>{% if forloop.first %}Method overview{% else %}Key results{% endif %}</h3>
+        <figure class="project-figure">
+          <img
+            src="{{ figure.src | prepend: '/assets/img/projects/' | relative_url }}"
+            alt="{{ figure.alt | escape }}"
+            loading="lazy"
+            decoding="async"
+            {% if figure.width %}
+              width="{{ figure.width }}" height="{{ figure.height }}"
+            {% endif %}
+          >
+          <figcaption><strong>Figure {{ forloop.index }}.</strong> {{ figure.caption }}</figcaption>
+        </figure>
+      </section>
+    {%- endfor %}
+
+    <section class="project-section">
+      <h3>BibTeX</h3>
+      {%- assign dialog_bibtex = p.bib | bibtex_for -%}
+      {% include bibtex_block.liquid id=dialog_bibtex_id bibtex=dialog_bibtex open=true %}
+    </section>
+  </div>
+</dialog>

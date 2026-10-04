@@ -1,0 +1,5 @@
+<svg class="pi pi-positron-gan" viewBox="0 0 100 100" width="100" height="100" aria-hidden="true" focusable="false">
+<path class="pi-path" d="M12 84L24 66 17 55 35 48 30 34 48 38 55 22 68 33 86 18" pathLength="1"/>
+<g class="pi-ann"><circle cx="86" cy="18" r="5"/><circle class="pi-ring" cx="86" cy="18" r="9"/></g>
+<circle class="pi-pt" cx="12" cy="84" r="3"/>
+</svg>

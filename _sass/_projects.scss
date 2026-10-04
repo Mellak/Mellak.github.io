@@ -1,0 +1,933 @@
+// Pill link buttons (publications, project cards, project popups), project cards,
+// project popups and the animated project icons.
+
+// ---------------------------------------------------------------------------
+// Pill buttons
+// ---------------------------------------------------------------------------
+:root {
+  --pill-bg: #363636;
+  --pill-text: #fff;
+  --pill-border: transparent;
+  --pill-hover-bg: var(--global-theme-color);
+  --pill-hover-text: #fff;
+  --project-tint: rgba(181, 9, 172, 0.06);
+}
+html[data-theme="dark"] {
+  --pill-bg: #3a3a40;
+  --pill-text: #f2f2f3;
+  --pill-border: rgba(255, 255, 255, 0.16);
+  --pill-hover-bg: var(--global-theme-color);
+  --pill-hover-text: #0e0e10;
+  --project-tint: rgba(38, 152, 186, 0.1);
+}
+
+.pill-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.55rem 0 0.25rem;
+}
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.85rem;
+  border: 1px solid var(--pill-border);
+  border-radius: 999px;
+  background: var(--pill-bg);
+  color: var(--pill-text) !important;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+
+  i {
+    font-size: 0.95em;
+  }
+  span,
+  i {
+    color: inherit !important;
+  }
+  &:hover,
+  &:focus-visible,
+  &[aria-expanded="true"] {
+    background: var(--pill-hover-bg);
+    color: var(--pill-hover-text) !important;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--global-theme-color);
+    outline-offset: 2px;
+  }
+}
+.award-badge {
+  display: inline-block;
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--global-theme-color);
+}
+
+// Inline BibTeX block with copy button
+.bibtex-block {
+  position: relative;
+  margin-top: 0.6rem;
+  max-width: 100%;
+
+  &[hidden] {
+    display: none;
+  }
+  pre {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    padding-right: 5.5rem;
+    border-radius: 8px;
+    font-size: 0.78rem;
+  }
+  pre,
+  pre code {
+    white-space: pre-wrap !important;
+    overflow-wrap: anywhere;
+  }
+}
+.bibtex-copy {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.65rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 999px;
+  background: var(--global-bg-color);
+  color: var(--global-text-color);
+  font-size: 0.75rem;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--global-theme-color);
+    color: var(--global-theme-color);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Project cards
+// ---------------------------------------------------------------------------
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 2rem;
+
+  &.project-grid-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.project-card {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  padding: 1rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 12px;
+  background: var(--global-card-bg-color);
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover,
+  &:focus-within {
+    border-color: var(--global-theme-color);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+  .pill-buttons {
+    margin-bottom: 0;
+  }
+}
+.project-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  background: var(--project-tint);
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+.project-card-body {
+  min-width: 0;
+}
+.project-card-title {
+  display: block;
+  margin: 0 0 0.3rem;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--global-text-color) !important;
+  text-decoration: none !important;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--global-theme-color) !important;
+  }
+}
+.venue-badge {
+  display: inline-block;
+  padding: 0.05rem 0.55rem;
+  border: 1px solid var(--global-theme-color);
+  border-radius: 999px;
+  color: var(--global-theme-color);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.project-tldr {
+  margin: 0.45rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--global-text-color-light);
+}
+// Strip on the home page: narrower cards, icon on top
+.project-grid-strip .project-card {
+  grid-template-columns: 1fr;
+}
+
+@media (max-width: 991px) {
+  .project-grid.project-grid-strip {
+    grid-template-columns: 1fr;
+  }
+  .project-grid-strip .project-card {
+    grid-template-columns: 100px minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 420px) {
+  .project-card,
+  .project-grid-strip .project-card {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 0.75rem;
+    padding: 0.85rem;
+  }
+  .project-icon {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Project popup
+// ---------------------------------------------------------------------------
+body.project-dialog-open {
+  overflow: hidden;
+}
+.project-dialog {
+  width: calc(100% - 2rem);
+  max-width: 900px;
+  max-height: calc(100vh - 2rem);
+  max-height: calc(100dvh - 2rem);
+  padding: 0;
+  border: none;
+  border-radius: 14px;
+  background: var(--global-bg-color);
+  color: var(--global-text-color);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  &::backdrop {
+    background: rgba(10, 10, 12, 0.6);
+  }
+}
+.project-dialog-inner {
+  padding: 1.75rem 2.25rem 2.25rem;
+}
+.project-dialog-close {
+  position: sticky;
+  top: 0.75rem;
+  float: right;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: 0.75rem 0.75rem 0 0;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 50%;
+  background: var(--global-bg-color);
+  color: var(--global-text-color);
+  font-size: 1.05rem;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--global-theme-color);
+    color: var(--global-theme-color);
+  }
+}
+.project-dialog-header {
+  text-align: center;
+
+  .venue-badge {
+    margin-bottom: 0.6rem;
+  }
+  .pill-buttons {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+}
+.project-dialog-title {
+  margin: 0.25rem 0 0.75rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.project-authors {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 1rem;
+
+  li {
+    display: inline;
+
+    &:not(:last-child)::after {
+      content: ", ";
+    }
+  }
+  .self {
+    font-weight: 600;
+  }
+}
+.project-affiliations {
+  margin: 0.35rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.85rem;
+  color: var(--global-text-color-light);
+}
+.project-section {
+  margin-top: 1.75rem;
+
+  h3 {
+    margin: 0 0 0.6rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+    text-align: center;
+  }
+}
+.project-abstract {
+  padding: 1.1rem 1.35rem;
+  border-radius: 10px;
+  background: var(--project-tint);
+  line-height: 1.6;
+  text-align: justify;
+  hyphens: auto;
+
+  p {
+    margin: 0;
+  }
+}
+.project-figure {
+  margin: 0;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    background: #fff;
+  }
+  figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--global-text-color-light);
+  }
+}
+@media (max-width: 575px) {
+  .project-dialog {
+    width: calc(100% - 1rem);
+    max-height: calc(100vh - 1rem);
+    max-height: calc(100dvh - 1rem);
+  }
+  .project-dialog-inner {
+    padding: 1rem 1rem 1.5rem;
+  }
+  .project-dialog-title {
+    font-size: 1.3rem;
+  }
+  .project-abstract {
+    padding: 0.9rem 1rem;
+    text-align: left;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Animated project icons (inline SVG). The base styles are the static frame;
+// animations only run while the icon has .is-playing (set by projects.js when
+// on screen and when reduced motion is off).
+// ---------------------------------------------------------------------------
+.pi {
+  color: var(--global-theme-color);
+
+  * {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .pi-pt {
+    fill: currentColor;
+  }
+  .pi-lbl,
+  .pi-lbl text {
+    font: 600 8px sans-serif;
+    fill: var(--global-text-color-light);
+    text-anchor: middle;
+  }
+}
+
+// DDConv: wide kernel in lung, tight kernel in bone
+.pi-ddconv {
+  .pi-soft {
+    fill: currentColor;
+    fill-opacity: 0.06;
+    stroke: currentColor;
+    stroke-opacity: 0.35;
+    stroke-dasharray: 2 3;
+  }
+  .pi-dense {
+    fill: var(--global-text-color-light);
+    fill-opacity: 0.3;
+  }
+}
+.is-playing .pi-ddconv .pi-k {
+  animation: pi-spread 3.6s ease-out infinite;
+}
+@keyframes pi-spread {
+  0% {
+    transform: scale(0.05);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  55%,
+  85% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+// Positron GAN: zig-zag path drawing itself, then annihilation
+.pi-positron-gan {
+  .pi-path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  .pi-ann circle {
+    fill: currentColor;
+  }
+  .pi-ann .pi-ring {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    opacity: 0.5;
+  }
+  .pi-pt {
+    fill: var(--global-text-color-light);
+  }
+}
+.is-playing .pi-positron-gan {
+  .pi-path {
+    animation: pi-draw 3.4s ease-in-out infinite;
+  }
+  .pi-ann {
+    animation: pi-pop 3.4s ease-out infinite;
+  }
+}
+@keyframes pi-draw {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 1;
+  }
+  60%,
+  92% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+@keyframes pi-pop {
+  0%,
+  58% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  68% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+  76%,
+  92% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+// Direct3γ: detector ring, three gammas and a Compton cone meeting at the emission point
+.pi-direct3gamma {
+  .pi-det {
+    fill: none;
+    stroke: var(--global-text-color-light);
+    stroke-width: 5;
+    stroke-dasharray: 4.2 1.5;
+    opacity: 0.5;
+  }
+  .pi-g {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  .pi-cone {
+    fill: currentColor;
+    fill-opacity: 0.14;
+    stroke: currentColor;
+    stroke-width: 1;
+    stroke-dasharray: 2.5 2;
+    opacity: 0.8;
+  }
+  .pi-e {
+    stroke: var(--global-bg-color);
+    stroke-width: 1.2;
+  }
+}
+.is-playing .pi-direct3gamma {
+  .pi-g1 {
+    animation: pi-3g-a 4s ease-out infinite;
+  }
+  .pi-g2 {
+    animation: pi-3g-b 4s ease-out infinite;
+  }
+  .pi-cone {
+    animation: pi-3g-c 4s ease-out infinite;
+  }
+  .pi-e {
+    animation: pi-3g-e 4s ease-out infinite;
+  }
+}
+@keyframes pi-3g-a {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 1;
+  }
+  20%,
+  92% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+@keyframes pi-3g-b {
+  0%,
+  20% {
+    stroke-dashoffset: 1;
+    opacity: 1;
+  }
+  38%,
+  92% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+@keyframes pi-3g-c {
+  0%,
+  38% {
+    opacity: 0;
+  }
+  50%,
+  92% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes pi-3g-e {
+  0%,
+  50% {
+    transform: scale(1);
+  }
+  58% {
+    transform: scale(1.7);
+  }
+  66%,
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Continuous 3D LDM: noise -> stacked slices -> volume
+.pi-continuous-3d-ldm {
+  .pi-noise rect {
+    fill: currentColor;
+  }
+  .pi-arrow,
+  .pi-edge {
+    fill: none;
+    stroke: var(--global-text-color-light);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .pi-edge {
+    stroke: currentColor;
+    stroke-width: 1.2;
+  }
+  .pi-sl,
+  .pi-cube {
+    fill: currentColor;
+    fill-opacity: 0.18;
+    stroke: currentColor;
+    stroke-width: 1.3;
+    stroke-linejoin: round;
+  }
+}
+.is-playing .pi-continuous-3d-ldm {
+  .pi-noise {
+    animation: pi-st1 3.6s ease-in-out infinite;
+  }
+  .pi-noise rect:nth-child(3n) {
+    animation: pi-flick 0.5s steps(2) infinite;
+  }
+  .pi-sl {
+    animation: pi-st2 3.6s ease-out infinite both;
+    animation-delay: calc(var(--i) * 0.15s);
+  }
+  .pi-vol {
+    animation: pi-st3 3.6s ease-out infinite;
+  }
+}
+@keyframes pi-flick {
+  50% {
+    opacity: 0.1;
+  }
+}
+@keyframes pi-st1 {
+  0%,
+  30% {
+    opacity: 1;
+  }
+  42%,
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes pi-st2 {
+  0%,
+  22% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  34%,
+  90% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes pi-st3 {
+  0%,
+  55% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  68%,
+  92% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+// 3D Latent Implicit: grid points queried at continuous coordinates
+.pi-latent-implicit {
+  .pi-axis {
+    fill: none;
+    stroke: var(--global-text-color-light);
+    stroke-width: 1.5;
+  }
+  .pi-grid circle {
+    fill: var(--global-text-color-light);
+  }
+  .pi-q {
+    transform: translate(47px, 40px);
+    transform-box: view-box;
+    transform-origin: 0 0;
+  }
+  .pi-guide {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1;
+    stroke-dasharray: 2 2;
+    opacity: 0.7;
+  }
+  .pi-qc {
+    fill: currentColor;
+    fill-opacity: 0.2;
+    stroke: currentColor;
+    stroke-width: 1.6;
+  }
+  .pi-qx {
+    stroke: currentColor;
+    stroke-width: 1.4;
+  }
+}
+.is-playing .pi-latent-implicit .pi-q {
+  animation: pi-query 3.6s ease-in-out infinite;
+}
+@keyframes pi-query {
+  0%,
+  18% {
+    transform: translate(47px, 40px);
+  }
+  33%,
+  51% {
+    transform: translate(71px, 63px);
+  }
+  66%,
+  84% {
+    transform: translate(29px, 74px);
+  }
+  100% {
+    transform: translate(47px, 40px);
+  }
+}
+
+// Frozen SD-VAE: 2D slices through a frozen (locked) encoder
+.pi-frozen-sd-vae {
+  .pi-sl {
+    fill: currentColor;
+    fill-opacity: 0.18;
+    stroke: currentColor;
+    stroke-width: 1.3;
+    stroke-linejoin: round;
+  }
+  .pi-in2 {
+    opacity: 0;
+  }
+  .pi-enc {
+    fill: var(--global-text-color-light);
+    fill-opacity: 0.18;
+    stroke: var(--global-text-color-light);
+    stroke-width: 1.5;
+  }
+  .pi-lock path {
+    fill: none;
+    stroke: var(--global-text-color);
+    stroke-width: 2;
+  }
+  .pi-lock rect {
+    fill: var(--global-text-color);
+  }
+  .pi-lbl {
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .pi-lat rect {
+    fill: currentColor;
+  }
+}
+.is-playing .pi-frozen-sd-vae {
+  .pi-in {
+    animation: pi-feed 3.6s ease-in-out infinite;
+  }
+  .pi-in2 {
+    animation-delay: -1.8s;
+  }
+  .pi-lat rect {
+    animation: pi-stack 3.6s ease-out infinite both;
+    animation-delay: calc(var(--i) * 0.25s);
+  }
+}
+@keyframes pi-feed {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  45% {
+    transform: translateX(30px);
+    opacity: 1;
+  }
+  55%,
+  100% {
+    transform: translateX(34px);
+    opacity: 0;
+  }
+}
+@keyframes pi-stack {
+  0%,
+  35% {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  45%,
+  92% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+// One Linear Layer: sparse kernel matrix filling in
+.pi-one-linear-layer {
+  .pi-cells rect {
+    fill: currentColor;
+  }
+  .pi-gridl {
+    fill: none;
+    stroke: var(--global-text-color-light);
+    stroke-width: 0.6;
+    opacity: 0.5;
+  }
+  .pi-frame {
+    fill: none;
+    stroke: var(--global-text-color-light);
+    stroke-width: 1.5;
+  }
+}
+.is-playing .pi-one-linear-layer .pi-cells rect {
+  animation: pi-fill 3.6s ease-out infinite both;
+  animation-delay: calc(var(--i) * 0.1s);
+}
+@keyframes pi-fill {
+  0% {
+    transform: scale(0);
+  }
+  12%,
+  80% {
+    transform: scale(1);
+  }
+  95%,
+  100% {
+    transform: scale(0);
+  }
+}
+
+// OCT uveitis: scan line sweeping across retina layers
+.pi-oct-uveitis {
+  .pi-ly {
+    fill: none;
+    stroke: var(--global-text-color-light);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    opacity: 0.7;
+  }
+  .pi-ly0,
+  .pi-ly2 {
+    stroke: currentColor;
+    opacity: 0.9;
+  }
+  .pi-ly2 {
+    stroke-width: 3.5;
+    opacity: 0.45;
+  }
+  .pi-scan line {
+    stroke: currentColor;
+    stroke-width: 1.6;
+  }
+}
+.is-playing .pi-oct-uveitis .pi-scan {
+  animation: pi-sweep 3.4s ease-in-out infinite;
+}
+@keyframes pi-sweep {
+  0% {
+    transform: translateX(-42px);
+    opacity: 0;
+  }
+  8%,
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(42px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pi,
+  .pi * {
+    animation: none !important;
+  }
+}
+
+// CV page
+.cv-page {
+  h2 {
+    margin-top: 2rem;
+    font-size: 1.4rem;
+  }
+  .cv-contact .pill-buttons {
+    margin-top: 0;
+  }
+  .cv-projects {
+    padding-left: 1.1rem;
+
+    li {
+      margin-bottom: 0.45rem;
+      line-height: 1.5;
+    }
+  }
+}
