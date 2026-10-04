@@ -13,7 +13,7 @@
         {%- for author in p.authors %}
           <li{% if author.self %} class="self"{% endif %}>
             {{- author.name -}}
-            {%- if author.aff -%}<sup>{{ author.aff | join: ',' }}</sup>{%- endif -%}</li>
+            {%- if author.aff -%}<sup>{{ author.aff | join: ',' }}</sup>{%- endif -%}{%- unless forloop.last -%},{%- endunless -%}</li>
         {%- endfor %}
       </ul>
       <ul class="project-affiliations">
@@ -36,22 +36,25 @@
       <div class="project-abstract"><p>{{ p.abstract }}</p></div>
     </section>
 
+    {%- assign previous_kind = '' -%}
     {%- for figure in p.figures %}
       <section class="project-section">
-        <h3>{% if forloop.first %}Method overview{% else %}Key results{% endif %}</h3>
-        <figure class="project-figure">
+        {%- if figure.kind != previous_kind %}
+          <h3>{% if figure.kind == 'method' %}Method overview{% else %}Key results{% endif %}</h3>
+        {%- endif %}
+        <figure class="project-figure{% if figure.narrow %} project-figure-narrow{% endif %}">
           <img
             src="{{ figure.src | prepend: '/assets/img/projects/' | relative_url }}"
             alt="{{ figure.alt | escape }}"
+            width="{{ figure.width }}"
+            height="{{ figure.height }}"
             loading="lazy"
             decoding="async"
-            {% if figure.width %}
-              width="{{ figure.width }}" height="{{ figure.height }}"
-            {% endif %}
           >
           <figcaption><strong>Figure {{ forloop.index }}.</strong> {{ figure.caption }}</figcaption>
         </figure>
       </section>
+      {%- assign previous_kind = figure.kind -%}
     {%- endfor %}
 
     <section class="project-section">
