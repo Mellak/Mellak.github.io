@@ -1,0 +1,51 @@
+{%- comment -%}
+  Shared link buttons for publications, project cards and project popups.
+  Fixed order; each button appears only when its link exists:
+  Publication · arXiv · PDF (only without arXiv) · Code · BibTeX · Project · Website
+  Parameters:
+    doi, publication (overrides the DOI link, e.g. HAL), arxiv, pdf, code, website
+    bibtex_id: id of the inline BibTeX block this button toggles
+    project:   project id (opens its popup, or links to /projects/#id)
+{%- endcomment -%}
+{%- assign publication_url = include.publication -%}
+{%- if publication_url == blank and include.doi != blank -%}
+  {%- assign publication_url = include.doi | prepend: 'https://doi.org/' -%}
+{%- endif -%}
+{%- assign publication_icon = 'ai ai-doi' -%}
+{%- if publication_url contains 'hal.science' -%}
+  {%- assign publication_icon = 'ai ai-hal' -%}
+{%- endif -%}
+<div class="pill-buttons">
+  {%- if publication_url != blank %}
+    <a class="pill-btn" href="{{ publication_url }}"><i class="{{ publication_icon }}" aria-hidden="true"></i><span>Publication</span></a>
+  {%- endif %}
+  {%- if include.arxiv != blank %}
+    <a class="pill-btn" href="https://arxiv.org/abs/{{ include.arxiv }}"><i class="ai ai-arxiv" aria-hidden="true"></i><span>arXiv</span></a>
+  {%- elsif include.pdf != blank %}
+    {%- if include.pdf contains '://' -%}
+      {%- assign pdf_url = include.pdf -%}
+    {%- else -%}
+      {%- assign pdf_url = include.pdf | prepend: '/assets/pdf/' | relative_url -%}
+    {%- endif %}
+    <a class="pill-btn" href="{{ pdf_url }}"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i><span>PDF</span></a>
+  {%- endif %}
+  {%- if include.code != blank %}
+    <a class="pill-btn" href="{{ include.code }}"
+      ><i class="{% if include.code contains 'github.com' %}fa-brands fa-github{% else %}fa-solid fa-code{% endif %}" aria-hidden="true"></i
+      ><span>Code</span></a
+    >
+  {%- endif %}
+  {%- if include.bibtex_id != blank %}
+    <button type="button" class="pill-btn" data-bibtex-toggle="{{ include.bibtex_id }}" aria-controls="{{ include.bibtex_id }}" aria-expanded="false">
+      <i class="fa-solid fa-quote-right" aria-hidden="true"></i><span>BibTeX</span>
+    </button>
+  {%- endif %}
+  {%- if include.project != blank %}
+    <a class="pill-btn" href="{{ '/projects/' | relative_url }}#{{ include.project }}" data-project-open="{{ include.project }}"
+      ><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span>Project</span></a
+    >
+  {%- endif %}
+  {%- if include.website != blank %}
+    <a class="pill-btn" href="{{ include.website }}"><i class="fa-solid fa-globe" aria-hidden="true"></i><span>Website</span></a>
+  {%- endif %}
+</div>
